@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config()
 const {testConexion} = require('./config/baseDatos')
-
+const {obtenerVideojuegos} = require('./controllers/videojuegos-controller')
 
 const app = express();
 const puerto = process.env.PORT || 3000;
@@ -50,6 +50,8 @@ app.get('/', (req, res) => {
         </body>
         </html>`)
 })
+
+app.get('/api/videojuegos', obtenerVideojuegos);
 
 const iniciarServer = async ()=>{
     try {
