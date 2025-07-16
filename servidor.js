@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config()
 const {testConexion} = require('./config/baseDatos')
-const {obtenerVideojuegos, obtenerVideojuegoId, crearVideojuego, actualizarVideojuegoId} = require('./controllers/videojuegos-controller')
+const {obtenerVideojuegos, obtenerVideojuegoId, crearVideojuego, actualizarVideojuegoId, eliminarVideojuego} = require('./controllers/videojuegos-controller')
 
 const app = express();
 const puerto = process.env.PORT || 3000;
@@ -55,6 +55,7 @@ app.get('/api/videojuegos', obtenerVideojuegos);
 app.get('/api/videojuegos/:id', obtenerVideojuegoId);
 app.post('/api/videojuegos', crearVideojuego);
 app.put('/api/videojuegos/:id', actualizarVideojuegoId);
+app.delete('/api/videojuegos/:id', eliminarVideojuego);
 
 
 const iniciarServer = async ()=>{

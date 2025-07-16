@@ -127,10 +127,41 @@ const actualizarVideojuegoId = async (req, res) => {
     }
 }
 
+const eliminarVideojuego = async(req, res) => {
+    try {
+        
+        const {id} = req.params;
+        const consulta = 'DELETE FROM videojuegos WHERE id = $1 RETURNING *';
+        const resultado = await pool.query(consulta, [id]);
+        if(resultado.rows.length === 0){
+            return res.status(404).json({
+                exito: false,
+                mensaje: 'Videojuego no encontrado'
+            })
+        }
+        res.json({
+            exito: true,
+            mensaje: 'Videojuego eliminado exitosamente',
+            data: resultado.rows[0]
+        })
+
+
+    } catch (error) {
+        console.log('Error: ', error);
+        res.status(500).json({// fallo en la solicitud
+            exito: false,
+            mensaje: 'Error al eliminar el videojuego',
+            error: error.message
+        }) 
+    }
+
+}
+
 
 module.exports = {
     obtenerVideojuegos,
     obtenerVideojuegoId,
     crearVideojuego,
-    actualizarVideojuegoId
+    actualizarVideojuegoId,
+    eliminarVideojuego
 }
